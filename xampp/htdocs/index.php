@@ -111,7 +111,7 @@
  			<div class="panel-body">
  				  <div class="row">
  					<div class="col-sm-3 text-center">
- 						<a href="./lostpassword.php" class="btn btn-link" role="button" title="Jeżeli utracono hasło, żądaj wygenerowania nowego.">ODZYSKIWANIE HASŁA</a>
+ 						<a href="./lostpassword.php" class="btn btn-link" role="button" title="Kliknij w ten link aby otrzymać emailem nowe hasło">ODZYSKIWANIE HASŁA</a>
  					</div>
  					<div class="col-sm-9">
  					<p>Kliknij, jeżeli zapomniałaś/zapomniałeś hasła</p>
