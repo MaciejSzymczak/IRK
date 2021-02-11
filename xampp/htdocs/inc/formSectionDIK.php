@@ -155,6 +155,10 @@
 			<label title="" class="control-label col-sm-5" for="Nazwisko">Pesel</label>
 			<div class="col-sm-7">
 			<input name="Pesel" id="Pesel" value="<?php echo $asR['Pesel']?>" maxlength="30"  placeholder="Pesel" onkeyup="validatePesel(this); setBirthDate(this)" size="35">
+				<button type="button" class="btn btn-sm btn-default" data-toggle="collapse" data-target="#myModal3">Nie posiadam nr PESEL</button>
+				<div id="myModal3" class="collapse" role="dialog">
+						<p>W przypadku braku PESEL prosi się o kontakt z   rekrutacja@wat.edu.pl  tel. 261 837 939</p>
+				</div> 	
 			</div>
 			<?php echo $PeselErrorMessage; ?>
 		</div>	
