@@ -104,9 +104,12 @@ if (!empty($asK['ID_kier_II_niestac'])) $k2n  = $conn->query("SELECT Nazwa_kieru
 			<?php printLabel("Nr domu:",$asR['Nr_domu_meld']) ?>	
 			<?php printLabel("Nr lokalu:",$asR['Nr_lokalu_meld']) ?>
 			<?php printLabel("Województwo:",$asR['Id_wojewodztwa_meld']) ?>
+			<?php printLabel("Rodzaj miejscowości:",$asR['ID_rodzaj_miejscowosci']) ?>
+			<?php printLabel("---","---") ?>
 			<?php printLabel("WKU:",$asR['Id_wku']) ?>
 			<!--?php printLabel("Seria i nr ksiazeczki wojskowej:",$asR['Military_Service_ID']) ?-->
-			<?php printLabel("Rodzaj miejscowości:",$asR['ID_rodzaj_miejscowosci']) ?>
+			<!--?php printLabel("Czy jesteś/będziesz absolwentem CWKM:",$asR['CWKM_Flag']) ?-->
+			<!--?php printLabel("Czy jesteś/będziesz absolwentem OLL:",$asR['OLL_Flag']) ?-->
 		  </div>
 		</div>    
 	  <div class="panel panel-default"  style="margin: 0px;">

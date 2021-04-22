@@ -123,39 +123,5 @@ function validateTT()
 			</select!-->
 			</div>
 		</div>		
-		<div class="row"></div>	
-		<p></p>
-		<div class="form-group">
-			<label title="" class="control-label col-sm-4" for="Id_wku">WKU</label>
-			<div class="col-sm-8">
-			<select size="1" name="Id_wku" >
-			<?php //if (!empty($asR['Id_wku'])) { echo '<option>'.$asR['Id_wku'].'</option>';} ?>
-			<?php //if (empty($asR['Id_wku'])) { echo '<option>-----&gt; dokonaj wyboru &lt;--------</option>';} ?>
-			<option value="0">WYBIERZ</option>
-			<?php include 'inc\fFS_wku.php'; ?>
-			</select>	
-			<button type="button" class="btn btn-sm btn-default" data-toggle="collapse" data-target="#myModal3">Pomoc</button>
-				<div id="myModal3" class="collapse" role="dialog">
-						<p>Wojskowa Komenda Uzupełnień, na ewidencji której jest kandydat</p>
-				</div> 			
-			</div>
-		</div>
-	    <?php
-	    //START:STUDY_DEGREE 1 ONLY
-	    if ($_SESSION['STUDY_DEGREE'] == '1') {
-	    ?>		  
-		<div class="form-group">
-			<label title="" class="control-label col-sm-4" for="Military_Service_ID">Seria i nr książeczki wojskowej</label>
-			<div class="col-sm-8">
-			<input name="Military_Service_ID" value="<?php echo $asR['Military_Service_ID']?>" maxlength="35" placeholder="Seria i nr książeczki wojskowej" size="65" type="text">
-			</div>
-		</div>	
-		<div class="form-group">
-			<label title="" class="control-label col-sm-12"><span style="color:grey">Dotyczy wyłącznie kandydata na studia wojskowe – wypełnij jeżeli posiadasz książeczkę wojskową.</span></label>
-		</div>	
-	    <?php
-	    }
-	    //END:STUDY_DEGREE 1 ONLY
-	    ?>		
 		</div>
   </div>

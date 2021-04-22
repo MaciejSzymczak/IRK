@@ -77,6 +77,8 @@ if ($UpdateMode) {	// => old formS or formS2
 		$asR['Id_wojewodztwa_meld'] = 0;
 		$asR['ID_rodzaj_miejscowosci'] = 0;
 		$asR['Id_wku'] = 0;
+		$asR['CWKM_Flag'] = '---';
+		$asR['OLL_Flag'] = '---';
 		foreach ($asR as $key => $value) {
 			$_SESSION[$key] = $value;
 		}
@@ -178,6 +180,7 @@ if ($stage == 1) { ?>
 	  <div class="container">
 	  <?php include 'inc\formSectionMainAddress.php'; ?>
 	  <?php include 'inc\formSectionCorrAddress.php'; ?>
+	  <?php include 'inc\formSectionMilitaryService.php'; ?>
 	  <!--?php include 'inc\formSectionBarracksAddress.php'; ?-->
 	  </div>
 	  <!-- form2.html.koniec -->
@@ -195,6 +198,12 @@ if ($stage == 1) { ?>
 		$('select[name=Id_wojewodztwa_meld]').val('<?=$asR['Id_wojewodztwa_meld']?>');
 		$('input[name=ID_rodzaj_miejscowosci][value=<?=$asR['ID_rodzaj_miejscowosci']?>]').prop("checked",true);
 		$('select[name=Id_wku]').val('<?=$asR['Id_wku']?>');
+  	    <?php if ($_SESSION['STUDY_DEGREE']=='1') { ?>
+		  $('select[name=CWKM_Flag]').val('<?=$asR['CWKM_Flag']?>');
+		  $('select[name=OLL_Flag]').val('<?=$asR['OLL_Flag']?>');
+		  validatePickListNotEmpty(document.getElementById("CWKM_Flag"));
+		  validatePickListNotEmpty(document.getElementById("OLL_Flag"));
+	    <?php } ?>
 		validateTT();
 	  </script>  
 	</form>
@@ -362,6 +371,8 @@ if ($stage == 1) { ?>
 	$Tel_kom = trim($_SESSION['Tel_kom']);
 	$Id_wku = trim($_SESSION['Id_wku']);
 	$Military_Service_ID = trim($_SESSION['Military_Service_ID']);
+	$CWKM_Flag = trim($_SESSION['CWKM_Flag']);
+	$OLL_Flag = trim($_SESSION['OLL_Flag']);
 	$Ulica = trim($_SESSION['Ulica']);
 	$Ulica_JW = trim($_SESSION['Ulica_JW']);
 	$NrTel_JW = trim($_SESSION['NrTel_JW']);
@@ -419,6 +430,8 @@ if ($stage == 1) { ?>
 		,  Ulica_meld= :Ulica_meld
 		,  Id_wku= :Id_wku
 		,  Military_Service_ID= :Military_Service_ID
+		,  CWKM_Flag= :CWKM_Flag
+		,  OLL_Flag= :OLL_Flag
 		,  kod_pocz_JW= :kod_pocz_JW
 	WHERE Id_Kandydata = :Id_Kandydata";
 	$stmt = $conn->prepare($zapytanie);
@@ -444,6 +457,8 @@ if ($stage == 1) { ?>
 		, 'Ulica_meld' => $Ulica_meld
 		, 'Id_wku' => $Id_wku
 		, 'Military_Service_ID' => $Military_Service_ID
+		, 'CWKM_Flag' => $CWKM_Flag
+		, 'OLL_Flag' => $OLL_Flag
 		, 'kod_pocz_JW' => $kod_pocz_JW
 		]);
 	////if ($wynik) echo  mysql_affected_rows().'+[ B ] Rejestracja została zakończona pomyślnie.'; else echo '"<br>"[ FormS2 kda ] Informacja dla Administratora systemu. W zapisie jest błąd.';

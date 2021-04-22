@@ -81,7 +81,7 @@ sendMail($adminEmail, $naglowek, $tresc, $senderEmail );
 require "D:/xampp2/htdocs/db_connect.inc.php";
 opendb("irk");
 $info='';$i=0;
-$fName="D:/xampp2/htdocs_data/"."DystrybMail_".date('d')."-".date('m')."-".date('Y')."_".date('h')."_".date('i')."_".date('s A').".txt";
+$fName="D:/xampp2/htdocs_data/email/"."DystrybMail_".date('d')."-".date('m')."-".date('Y')."_".date('h')."_".date('i')."_".date('s A').".txt";
 $fh=fopen($fName,"w");
 $arrTK="ListaMail wygenerowana dnia/godzina: ".date('d')."-".date('m')."-".date('Y h:i:s A'). PHP_EOL;
 //$dataKomunikat = mysql_query("SELECT * FROM mailkomunikaty ORDER BY ID_mailkomunikaty ASC") or die(mysql_error());

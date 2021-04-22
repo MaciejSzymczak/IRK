@@ -8,7 +8,7 @@ D:\xampp2\mysql\bin\mysql -uroot -p%ROOTP% irkDump <  %sqlpath%\truncate_irkdump
 D:\xampp2\mysql\bin\mysql -uroot -p%ROOTP% irk <  %sqlpath%\insertExamples.sql
 D:\xampp2\mysql\bin\mysql -uroot -p%ROOTP% irk <  %sqlpath%\insertAdmin.sql
 del /Q D:\xampp2\htdocs_data\*.jpg
-del /Q d:\xampp2\htdocs_data\DystrybMail_*.txt
+del /Q d:\xampp2\htdocs_data\email\DystrybMail_*.txt
 
 ::stop
 del D:\xampp2\htdocs_internal\tmp\DBCleanUpInProgress.txt

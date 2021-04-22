@@ -13,7 +13,7 @@ md %workFolder%
 md %workFolder%\DystMail
 D:\xampp2\mysql\bin\mysqldump -uroot -p%ROOTP% --result-file="%workFolder%\IRK.sql"  irk
 D:\xampp2\mysql\bin\mysqldump -uroot -p%ROOTP% --result-file="%workFolder%\DUMP.sql" irkDump
-copy d:\xampp2\htdocs_data\DystrybMail_*.txt %workFolder%\DystMail\*.txt
+copy d:\xampp2\htdocs_data\email\DystrybMail_*.txt %workFolder%\DystMail\*.txt
 xcopy D:\xampp2\htdocs_data %workFolder%\htdocs_data /EI
 
 "C:\Program Files\7-Zip\7z.exe" a -t7z D:\Backups\IRK_Backup_%isoNow%.7z %workFolder%
