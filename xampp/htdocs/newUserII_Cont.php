@@ -1,5 +1,5 @@
 <?php
-if (!(($_POST['stStud2'] == 'DALEJ' ) or ( $_POST[register] == 'ZAŁÓŻ KONTO'))){echo "Dostęp zabroniony";exit();}
+if (!(($_POST['stStud2'] == 'DALEJ' ) or ( $_POST['register'] == 'ZAŁÓŻ KONTO'))){echo "Dostęp zabroniony";exit();}
 require_once "header.php";
 if (isset($_POST['register'])){
 $returnMessage = registerNewUser($_POST['email'], '6');

@@ -329,7 +329,7 @@
 
 	//STUDY_DEGREE 2
 	if  (($_SESSION['STUDY_DEGREE'] =='2') and (!$Degree2DisableApplication=='+')){
-	   echo "<li><a href='./qform.php'>PODANIE-ANKIETA</a></li>";
+	   echo "<li><a href='./qform.php'>WNIOSEK-ANKIETA</a></li>";
 	   if ($_POST['ile_login']>1) echo "<li><a href='./wssks2.php'>WYBÓR SYSTEMU STUDIÓW I KIERUNKU</a></li>";
 	 }
 	 
@@ -340,7 +340,7 @@
 
 	//STUDY_DEGREE 1
 	if  (($_SESSION['STUDY_DEGREE'] =='1') and (!$Degree1DisableApplication=='+')){
-	    echo "<li><a href='./qform.php'>PODANIE-ANKIETA</a></li>";
+	    echo "<li><a href='./qform.php'>WNIOSEK-ANKIETA</a></li>";
 		if ($_POST['ile_login']>1) echo "<li><a href='./qformView.php'>PRZEGLĄDANIE ANKIETY</a></li>";
 		if ($_POST['ile_login']>1) echo "<li><a href='./photoUpload.php'>PRZESŁANIE ZDJĘCIA</a></li>";
 		if ($_POST['ile_login']>1) echo "<li><a href='./qwyniki_matura.php'>PRZESŁANIE WYNIKÓW ZE ŚWIADECTWA DOJRZAŁOŚCI</a></li>";

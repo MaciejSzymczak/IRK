@@ -69,6 +69,7 @@ $HIDE = ' style="display: none;" ';
 
 ?>
 
+<!DOCTYPE html>
 <html lang="pl">
 <head>
   <title>Internetowa Rejestracja Kandydatów do WAT</title>

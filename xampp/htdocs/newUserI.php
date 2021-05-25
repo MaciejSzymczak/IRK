@@ -1,6 +1,7 @@
 <?php 
-if (!($_POST['B1'] == 'Dalej')){echo "Dostęp zabroniony";exit();}
-require_once "header.php"; ?>
+	if (!($_POST['Caller'] == 'privacyPolicy')){header('Location: index.php');}
+	require_once "header.php"; 
+?>
 
 <div class="panel panel-default">
 	<div class="panel-heading" style="text-align: center;">INFORMACJE DLA KANDYDATA<br>KORZYSTAJĄCEGO Z INTERNETOWEJ REJESTRACJI KANDYDATÓW NA STUDIA</div>

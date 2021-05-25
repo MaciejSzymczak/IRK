@@ -1,6 +1,23 @@
 <?php 
 if (!($_POST['B1'] == 'STUDIA I STOPNIA') and !($_POST['B1'] == 'STUDIA II STOPNIA')){echo "Dostęp zabroniony";exit();}
 require_once "header.php"; 
+
+$goToNewUser = false;	
+if ($_POST['g-recaptcha-response']) {
+	function getCaptcha($SecretKey) {
+		global $SECRET_KEY;
+		$Response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$SECRET_KEY."&response={$SecretKey}");
+		$Return = json_decode($Response);
+		return $Return;
+	}
+	$Return = getCaptcha($_POST['g-recaptcha-response']);
+	if ($Return->success ==true && $Return->score > 0.5) {
+		$goToNewUser = true;	
+	} else {
+		echo "Robotom wstęp wzbroniony!";
+		exit();
+	}
+}
 ?>
 
 <div class="panel panel-default">
@@ -27,24 +44,47 @@ Po zapoznaniu się i akceptacji powyższej informacji wyrażam zgodę na przetwa
 Nie wyrażenie zgody powoduje przerwanie procesu rejestracji w IRK (wyjście z IRK).<br/>
 Wyrażenie zgody powoduje przejście do kontynuacji rejestracji w IRK.<br/> <br/> 
 	<div style="text-align: center;">
-	<form class="form-inline" method="post" action="<?php if ($_POST['B1'] == 'STUDIA I STOPNIA'){echo "newUserI.php";}else{echo "newUserII.php";}?>">
-	
-	<div class="row">
-		<div class="col-sm-5">
-		  <input class="btn btn-primary" value="Nie wyrażam zgody" onclick="parent.location.href='index.php'" type="button">
+	<form class="form-inline" method="post" action="">
+		<input type="hidden" name="B1" value="<?php echo $_POST['B1']?>"/>
+		<input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response"><br/>
+
+		<div class="row">
+			<div class="col-sm-5">
+			  <input class="btn btn-primary" value="Nie wyrażam zgody" onclick="parent.location.href='index.php'" type="button">
+			</div>
+			<div class="col-sm-2">
+			</div>
+			<div class="col-sm-5">
+			  <input type="checkbox" class="form-check-input" id="privacyPolicy" onclick="document.getElementById('privacyPolicyContinue').disabled=!this.checked;" disabled>
+			  <label class="form-check-label" for="privacyPolicy">Wyrażam zgodę</label>
+			  <input class="btn btn-primary" value="Dalej" id="privacyPolicyContinue" type="submit" disabled>
+			</div>
 		</div>
-		<div class="col-sm-2">
-		</div>
-		<div class="col-sm-5">
-		  <input type="checkbox" class="form-check-input" id="privacyPolicy" onclick="document.getElementById('privacyPolicyContinue').disabled=!this.checked;">
-          <label class="form-check-label" for="privacyPolicy">Wyrażam zgodę</label>
-	      <input class="btn btn-primary" value="Dalej" id="privacyPolicyContinue" name="B1" type="submit" disabled>
-		</div>
-	</div>
-       
 	</form>
+
+	<form id="goToNewUser" class="form-inline" method="post" action="<?php if ($_POST['B1'] == 'STUDIA I STOPNIA'){echo "newUserI.php";}else{echo "newUserII.php";}?>">	
+		<input type="hidden" name="Caller" value="privacyPolicy"/>
+	</form>  
+	
+	<script src="https://www.google.com/recaptcha/api.js?render=<?php echo $SITE_KEY;?>"></script>
+	<script>
+		grecaptcha.ready(function() {
+		  grecaptcha.execute('<?php echo $SITE_KEY?>', {action: 'login'}).then(function(token) { //action: 'homepage'
+			  //alert(token);
+			  document.getElementById('g-recaptcha-response').value = token;
+			  document.getElementById('privacyPolicy').disabled=false;
+		  });
+		});
+	</script>
+	
 	</div>
 	</div>
 </div>	
+
+<?php 
+if ($goToNewUser==True) {
+	echo '<script>document.getElementById("goToNewUser").submit();</script>';	
+}
+?>
 
 <?php require_once "footer.php"; ?>
