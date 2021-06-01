@@ -85,12 +85,12 @@
 						$type = pathinfo($path, PATHINFO_EXTENSION);
 						$data = file_get_contents($path);
 						$base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-						echo '<img style="height:633; width:492;" id="result-img" src="'.$base64.'">';										
+						echo '<img style="height:633px; width:492px;" id="result-img" src="'.$base64.'">';										
 					} else {
 						$disableCrop = 'disabled';
 						$data = file_get_contents('D:/xampp2/htdocs/example.png');
 						$base64 = 'data:image/jpg;base64,' . base64_encode($data);
-						echo '<img style="height:633; width:492;" id="result-img" src="'.$base64.'">';										
+						echo '<img style="height:633px; width:492px;" id="result-img" src="'.$base64.'">';										
 					}
 					?>
 				</center>		  

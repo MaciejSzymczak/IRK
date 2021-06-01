@@ -196,7 +196,7 @@ if (!empty($currentRecordId)) {
 			$type = pathinfo($path, PATHINFO_EXTENSION);
 			$data = file_get_contents($path);
 			//$base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-			//echo '<img style="height:633; width:492;" id="result-img" src="'.$base64.'">';			
+			//echo '<img style="height:633px; width:492px;" id="result-img" src="'.$base64.'">';			
 			$base64 = 'data:application/pdf;base64,' . base64_encode($data);						
 			echo '<object data="'.$base64.'" type="application/pdf"  width="900" height="700"></object>';					
 		} else {
