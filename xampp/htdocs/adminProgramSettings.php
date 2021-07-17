@@ -44,6 +44,7 @@ if ($isAdmin!='+') {
 				saveResource('FeeMilitaryCivil');	
 				saveResource('FeeCivil');	
 				saveResource('SendingDocs');	
+				saveResource('PasswordExpireInDays');	
 			}	
 		?>
 		<div class="alert alert-success" <?php if ($_POST['command']=='SAVE') {} else { echo ' style="display: none;" '; }  ?> role="alert">
@@ -66,7 +67,8 @@ if ($isAdmin!='+') {
 			$Degree2DisableApplication = htmlspecialchars( $conn->query("SELECT value FROM programSettings WHERE LabelName = 'Degree2DisableApplication'")->fetch()[0] );
 			$FeeMilitaryCivil          = htmlspecialchars( $conn->query("SELECT value FROM programSettings WHERE LabelName = 'FeeMilitaryCivil'")->fetch()[0] );
 			$FeeCivil                  = htmlspecialchars( $conn->query("SELECT value FROM programSettings WHERE LabelName = 'FeeCivil'")->fetch()[0] );
-			$SendingDocs              = htmlspecialchars( $conn->query("SELECT value FROM programSettings WHERE LabelName = 'SendingDocs'")->fetch()[0] );
+			$SendingDocs               = htmlspecialchars( $conn->query("SELECT value FROM programSettings WHERE LabelName = 'SendingDocs'")->fetch()[0] );
+			$PasswordExpireInDays      = htmlspecialchars( $conn->query("SELECT value FROM programSettings WHERE LabelName = 'PasswordExpireInDays'")->fetch()[0] );
 
 			$LoginDisabledHintPreview  = $conn->query("SELECT value FROM programSettings WHERE LabelName = 'LoginDisabledHint'")->fetch()[0];
 			$CreateAccount1ButtonPreview      = $conn->query("SELECT value FROM programSettings WHERE LabelName = 'CreateAccount1Button'")->fetch()[0] ;
@@ -367,6 +369,22 @@ if ($isAdmin!='+') {
 			
 	    </div>
 		</div>			
+
+
+		<div class="panel panel-default">
+		  <div class="panel-heading">Ustawienia sesji</div>
+		  <div class="panel-body">
+		  
+		  
+			<div class="form-group">
+				<label title="" class="control-label col-sm-3" for="PasswordExpireInDays">Wymuszaj zmiane hasła po dniach</label>
+				<div class="col-sm-9">
+				<input name="PasswordExpireInDays" value="<?php echo $PasswordExpireInDays; ?>" maxlength="4"  placeholder="" size="4">
+				</div>
+			</div>		  		
+			
+	    </div>
+		</div>	
 
 		<p align="center">
 			<button type="button" class="btn btn-default glyphicon glyphicon-home" onclick="self.location.href=('./index.php');"> Anuluj</button>						

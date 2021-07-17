@@ -81,7 +81,8 @@
  				<div class="col-sm-9">
  				<p>'.$CreateAccount1Hint.'</p>
  				</div>
- 			  </div>';
+ 			  </div>
+			  <div class="row" style="margin-bottom:5px"> </div>';
  	}
  
  	// rejestracja Cywilne II stopnia

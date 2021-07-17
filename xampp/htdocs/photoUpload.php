@@ -111,6 +111,8 @@
 			  <div class="panel-body">
 			   <p><a target="_blank" href="https://obywatel.gov.pl/wyjazd-za-granice/zdjecie-do-dowodu-lub-paszportu">Kliknij tutaj aby zobaczyć przykłady prawidłowych oraz nieprawidłowych zdjęć</a></p>
 				<ul>
+				  <li>Głowa musi być skierowana prosto w obiektyw aparatu (nie możesz przekrzywiać głowy)</li>
+				  <li>Cały owal twojej twarzy oraz linia uszu muszą być widoczne (bez półprofilu)</li>
 				  <li>Twarz powinna zajmować 2/3 powierzchni zdjęcia</li>
 				  <li>Bez nakrycia głowy</li>
 				  <li>Na jasnym tle</li>
@@ -120,7 +122,8 @@
 				  
 				  <br/>
 				  <li>Zdjęcie w postaci elektronicznej w rozdzielczości co najmniej<strong> 300 dpi</strong></li>
-				  <li>Maksymalny rozmiar pliku ze zdjęciem<strong> min.20KB max.2,5MB</strong></li>
+				  <li>Minimalna rozdzielczość zdjęcia to 500x625 pikseli</li>
+				  <li>Maksymalny rozmiar pliku ze zdjęciem<strong> min.20KB max.16MB</strong></li>
 				  <li>Wymagany jest format <strong>.jpg</strong>.</li>
 				</ul>	
 
@@ -139,8 +142,8 @@
 						  document.getElementById('displayError').submit();
 						  return;
 						}
-						if (fileUploader.files[0].size>2621440) {
-						  document.getElementById('errorMessage').value="Rozmiar zdjęcia nie może być większy niż 2.5MB";
+						if (fileUploader.files[0].size>17301504) {
+						  document.getElementById('errorMessage').value="Rozmiar zdjęcia nie może być większy niż 16MB";
 						  document.getElementById('displayError').submit();
 						  return;
 						}
@@ -153,7 +156,7 @@
 					}
 				  </script>
 				  <input id="file" name="userfile" style="display:none;" type="file" onchange="validateFileAndUpload();" />
-				  <input type="button" class="btn btn-success btn-lg" value="Kadruj" onclick="document.getElementById('gotoPhotoCrop').submit();" <?php echo $disableCrop ?>/>
+				  <input type="button" class="btn btn-success btn-lg" value="Kadruj i wyślij" onclick="document.getElementById('gotoPhotoCrop').submit();" <?php echo $disableCrop ?>/>
 				  <!--input class="btn btn-success btn-lg" type="submit" style="display:none;" value="Wyślij"/-->
 				  <input class="btn btn-info btn-lg" value="Powrót" onclick="self.location.href=('./index.php')" type="button"/>
 				</form>

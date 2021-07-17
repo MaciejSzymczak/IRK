@@ -38,33 +38,51 @@ function show_changepassword_form($forcePasswordChange){
 
 function changePassword($username,$currentpassword,$newpassword,$newpassword2){
 	global $seed, $conn;
-    if (!valid_username($username) || !user_exists($username) || !valid_password($newpassword) || ($newpassword != $newpassword2) || ($newpassword == $currentpassword)) {
-        return false;
+    if (!valid_username($username)) {
+        return 'ERR1:Nieprawidłowy użytkownik';
+    }
+    if (!user_exists($username) ) {
+        return 'ERR2:Użytkownik nie istnieje';
+    }
+    if (!valid_password($newpassword) ) {
+        return 'ERR3:Zbyt krótkie hasło';
+    }
+    if (($newpassword != $newpassword2) ) {
+        return 'ERR4: Nowe hasło musi różnić się od starego';
+    }
+    if (($newpassword == $currentpassword)) {
+        return 'ERR5:Stare i nowe hasła muszą się różnić';
     }
     // we get the current password from the database
 	$stmt = $conn->prepare("SELECT password FROM login WHERE username = :username LIMIT 1");
 	$stmt->execute(['username' => $username]);
 	$pwd = $stmt->fetch()[0];
     if ($pwd != sha1($currentpassword.$seed)){
-        return false;
+        return 'ERR6:Stare i nowe hasła muszą się różnić';
     }
+	$PasswordExpireInDays = $conn->query("SELECT value FROM programSettings WHERE LabelName = 'PasswordExpireInDays'")->fetch()[0];
 	$stmt = $conn->prepare("update login set password = :password, usosPassword = :usosPassword, PasswordExpireOn = :PasswordExpireOn  where username = :username");
-	return $stmt->execute(['password' => sha1($newpassword.$seed), 'usosPassword' => md5($newpassword), 'PasswordExpireOn' => Date('Y:m:d', strtotime("+30 days")), 'username' => $username]);
+	$stmt->execute(['password' => sha1($newpassword.$seed), 'usosPassword' => md5($newpassword), 'PasswordExpireOn' => Date('Y:m:d', strtotime("+".$PasswordExpireInDays." days")), 'username' => $username]);
+	return 'OK';
 }
 
 $forcePasswordChange = $_SESSION['forcePasswordChange']=='True';
 if (isset($_POST['change']))
 {
-	if (changePassword(
+	
+	$changePasswordFlag = 
+		changePassword(
 		  $_POST['username']
 		, $_POST['oldpassword']
 		, $_POST['password'],
-		  $_POST['password2']))
+		  $_POST['password2']);
+	
+	if ($changePasswordFlag=='OK')
 	{
 	  echo "<div class='alert alert-success'>Twoje hasło zostało zamienione</div><br/><a href='./index.php'>Powrót do menu</a>";
 	} else
 	{
-	 echo "<div class='alert alert-warning'>Hasło wpisane niepoprawnie. Nowe hasło musi się różnić od poprzedniego, musi mieć minimum 8 znaków, duże i małe litery i znaki specjalne. Spróbuj jeszcze raz</div>";
+	 echo "<div class='alert alert-warning'>Hasło wpisane niepoprawnie. Nowe hasło musi się różnić od poprzedniego, musi mieć minimum 8 znaków, duże i małe litery i znaki specjalne. Spróbuj jeszcze raz (".$changePasswordFlag.")</div>";
 	 show_changepassword_form($forcePasswordChange);
 	}
 
