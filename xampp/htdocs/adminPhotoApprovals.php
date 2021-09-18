@@ -108,7 +108,6 @@ function showList() {
 	<div class="panel panel-default" <?php if (empty($currentRecordId)) { echo ' style="display: none;" '; }  ?> >
 			  <div class="panel-heading">PESEL <?php echo $currentRecordId;?>: ZATWIERDZANIE ZDJECIA DO ELEKTRONICZNEJ LEGITYMACJI STUDENCKIEJ (ELS)<p>Pozostało do zatwierdzenia: <?php echo $leftCnt;?></p></div>
 			  <div class="panel-body">
-
 				<div class="alert alert-success" <?php if ($isCompletedFlag==0) { echo ' style="display: none;" '; }  ?> role="alert">
 					<p>Zdjęcie zostało już zaakceptowane i przesłane</p>
 					<p></p>

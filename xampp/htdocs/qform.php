@@ -241,7 +241,114 @@ if ($stage == 1) { ?>
 	  <?php } ?>
 	  </script>  
 	</form>
-<?php } else if ($stage == 4) { ?>
+<?php } 
+
+if ($stage == 4) { 
+		function validatePostalCode ($postalCode) {
+		$result = '';
+		if (!empty($postalCode)) {
+			//digits only
+			if (preg_match("/^\d+$/", $postalCode) && strlen($postalCode)==5 ) {
+				//OK
+			} else {
+				$result = 'Nieprawidłowy KOD POCZTOWY, dopuszczalne są tylko cyfry: '.$postalCode. '.' ;
+			}		
+		}
+		return $result;
+		}
+
+	//-------------------VALIDACJA
+	$as_1='We wskazanym polu dopuszczalne są tylko cyfry.';
+	$error_messages= array();
+	if(!ctype_digit($asR['Rok_Ukonczenia_Szkoly'])&& (!empty($asR['Rok_Ukonczenia_Szkoly']))) $error_messages[] = "BŁĄD w roku uzyskania matury. ".$as_1;
+	if(!ctype_digit($asR['Nr_albumu'])&& (!empty($asR['Nr_albumu']))) $as_err[] = "BŁĄD w nr albumu. ".$as_1;
+	if(empty($asR['Nazwisko'])) $error_messages[] = "NAZWISKO jest wymagane.";
+	if(empty($asR['Imie'])) $error_messages[] = "Brak IMIENIA.";
+	if(empty($asR['data_urodzenia'])) $error_messages[] = "Brak DATY URODZENIA.";
+	//if(empty($asR['Miejsce_urodzenia'])) $error_messages[] = "Brak MIEJSCA URODZENIA.";
+		
+	$result = validatePostalCode ($asR['Kod_pocztowy_meld']); if (!empty($result)) $error_messages[] = $result;
+	$result = validatePostalCode ($asR['Kod_pocztowy']); if (!empty($result)) $error_messages[] = $result;
+		
+	$m1 = $asR['ID_kier_1_dz_wojskowe'];
+	$m2 = $asR['ID_kier_2_dz_wojskowe'];
+	$m3 = $asR['ID_kier_3_dz_wojskowe'];
+	$s1 = $asR['ID_kier_1_dzienne'];
+	$s2 = $asR['ID_kier_2_dzienne'];
+	$s3 = $asR['ID_kier_3_dzienne'];
+	$n1 = $asR['ID_kier_1_niestac'];
+	$n2 = $asR['ID_kier_2_niestac'];
+	$n3 = $asR['ID_kier_3_niestac'];	
+	$m1 = empty($m1)?0:$m1;
+	$m2 = empty($m2)?0:$m2;
+	$m3 = empty($m3)?0:$m3;
+	$s1 = empty($s1)?0:$s1;
+	$s2 = empty($s2)?0:$s2;
+	$s3 = empty($s3)?0:$s3;
+	$n1 = empty($n1)?0:$n1;
+	$n2 = empty($n2)?0:$n2;
+	$n3 = empty($n3)?0:$n3;
+	
+	if ($m2>0 && $m1==0) $error_messages[] = 'Wprowadzaj kierunki studiów wypełniając pola kolejno jedno po drugim (brak wartości w pozycji 1, wojskowe)';
+	if ($m3>0 && $m2==0) $error_messages[] = 'Wprowadzaj kierunki studiów wypełniając pola kolejno jedno po drugim (brak wartości w pozycji 2, wojskowe)';
+
+	if ($s2>0 && $s1==0) $error_messages[] = 'Wprowadzaj kierunki studiów wypełniając pola kolejno jedno po drugim (brak wartości w pozycji 1, stacjonarne)';
+	if ($s3>0 && $s2==0) $error_messages[] = 'Wprowadzaj kierunki studiów wypełniając pola kolejno jedno po drugim (brak wartości w pozycji 2, stacjonarne)';
+
+	if ($n2>0 && $n1==0) $error_messages[] = 'Wprowadzaj kierunki studiów wypełniając pola kolejno jedno po drugim (brak wartości w pozycji 1, niestacjonarne)';
+	if ($n3>0 && $n2==0) $error_messages[] = 'Wprowadzaj kierunki studiów wypełniając pola kolejno jedno po drugim (brak wartości w pozycji 2, niestacjonarne)';
+		
+	if ($m2==$m1 && $m1!=0) $error_messages[] = 'Wybrano dwukrotnie ten sam kierunek (pozycje 1 i 2, wojskowe)';
+	if ($m3==$m2 && $m2!=0) $error_messages[] = 'Wybrano dwukrotnie ten sam kierunek (pozycje 2 i 3, wojskowe)';
+	if ($m3==$m1 && $m1!=0) $error_messages[] = 'Wybrano dwukrotnie ten sam kierunek (pozycje 1 i 3, wojskowe)';
+
+	if ($s2==$s1 && $s1!=0) $error_messages[] = 'Wybrano dwukrotnie ten sam kierunek (pozycje 1 i 2, stacjonarne)';
+	if ($s3==$s2 && $s2!=0) $error_messages[] = 'Wybrano dwukrotnie ten sam kierunek (pozycje 2 i 3, stacjonarne)';
+	if ($s3==$s1 && $s1!=0) $error_messages[] = 'Wybrano dwukrotnie ten sam kierunek (pozycje 1 i 3, stacjonarne)';
+
+	if ($n2==$n1 && $n1!=0) $error_messages[] = 'Wybrano dwukrotnie ten sam kierunek (pozycje 1 i 2, niestacjonarne)';
+	if ($n3==$n2 && $n2!=0) $error_messages[] = 'Wybrano dwukrotnie ten sam kierunek (pozycje 2 i 3, niestacjonarne)';
+	if ($n3==$n1 && $n1!=0) $error_messages[] = 'Wybrano dwukrotnie ten sam kierunek (pozycje 1 i 3, niestacjonarne)';
+
+
+	if (!$error_messages) {
+		//Skip error messages page
+		$stage = 5;
+	}
+}
+?>
+
+<?php
+//Show error messages
+if ($stage == 4) { ?>
+	<form action='<?php echo $_SERVER['SCRIPT_NAME'] ?>' method='post'>
+	<input type='hidden' name='stage' value='<?php echo $stage + 1 ?>'/>
+	  <div class="container">
+		<?php 
+
+		echo '<div class="alert alert-info" role="alert">';
+		print 'Naciśnij przycisk WSTECZ i popraw błędy w ankiecie:<ul><li>';
+		print implode('</li><li>', $error_messages);
+		print '</li></ul>';
+		echo '</div>';
+		
+		?>
+	  </div>
+	  <input name="stage" value="<?php echo $stage + 1 ?>" type="hidden">
+	  <p align="center">
+		<input id="PrevForm" value="Wstecz" class="btn btn-info btn-lg" type="button" />
+	  </p>
+	  <script>
+		$(function () {
+			$('#PrevForm').click(function(){
+				$('input[name=stage]').val('<?=$stage-1?>').parents('form').submit();
+			});
+		});
+	  </script>  
+	</form>
+<?php } 
+
+if ($stage == 5) { ?>
 	<form action='<?php echo $_SERVER['SCRIPT_NAME'] ?>' method='post'>
 	<!-- form2.html.początek -->
 	<!-- przesyłanie danych POCZATEK -->
@@ -567,23 +674,6 @@ if ($stage == 1) { ?>
 	}
 
 	//<!-- przesyłanie danych KONIEC -->
-
-	//-------------------VALIDACJA
-	$as_1='We wskazanym polu dopuszczalne są tylko cyfry.';
-	$as_err= array();
-	if(!ctype_digit($Kod_pocztowy_meld)&& (!empty($Kod_pocztowy_meld))) $as_err[] = "BŁĄD w kodzie pocztowym miejsca zamieszkania. ".$as_1;
-	if(!ctype_digit($Kod_pocztowy)&& (!empty($Kod_pocztowy))) $as_err[] = "BŁĄD w kodzie pocztowym. ".$as_1;
-	if(!ctype_digit($Rok_Ukonczenia_Szkoly)&& (!empty($Rok_Ukonczenia_Szkoly))) $as_err[] = "BŁĄD w roku uzyskania matury. ".$as_1;
-	if(!ctype_digit($Nr_albumu)&& (!empty($Nr_albumu))) $as_err[] = "BŁĄD w nr albumu. ".$as_1;
-	if($Nazwisko=='') $as_err[] = "BŁĄD. Bez przesady. NAZWISKO jest wymagane. ";
-	if($Imie=='') $as_err[] = "BŁĄD. Brak IMIENIA. ";
-	if($data_urodzenia=='') $as_err[] = "BŁĄD. Brak DATY URODZENIA. ";
-	if($Miejsce_urodzenia=='') $as_err[] = "BŁĄD. Brak MIEJSCA URODZENIA. ";
-	 if ($as_err) {
-		 print 'Proszę o usunięcie następujących błędów w ponownym uruchomieniu ANKIETY <ul><li>';
-		 print implode('</li><li>', $as_err);
-		 print '</li></ul>';
-	 } else {print"Nie stwierdzono błędów możliwych do wykrycia przez automat.";}
 
 	//-------------------PRZESYŁANIE DANYCH DO DUMPA
 

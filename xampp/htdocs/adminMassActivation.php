@@ -110,11 +110,14 @@ if ($isAdmin!='+') {
 					$asloginid = $arr_A[$i]['loginid'];
 					$asemail = $arr_A[$i]['email'];
 					$asactcode = generate_code(20);
-					$update = "UPDATE login SET actcode= :actcode, activated=0 WHERE username = :username";
-					$stmt = $conn->prepare($update);
-					try{ $stmt->execute(['actcode' => $asactcode, 'username' => $asUsername]); }
-						catch(PDOException $e){ die('An error occured: '.$e); };
-					sendActivationEmail($asloginid, $asemail, $asactcode);
+					if (sendActivationEmail($asloginid, $asemail, $asactcode)) {
+						$update = "UPDATE login SET actcode= :actcode, activated=0 WHERE username = :username";
+						$stmt = $conn->prepare($update);
+						try{ $stmt->execute(['actcode' => $asactcode, 'username' => $asUsername]); }
+							catch(PDOException $e){ die('An error occured: '.$e); };						
+					} else {
+						die('Wystąpił problem z wysyłką emaila >'.$asemail."<");
+					}
 				 }
 				 echo '<tr class="Active">
 						<td>'.$arr_A[$i]['username'].'</td>

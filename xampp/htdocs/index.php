@@ -271,9 +271,9 @@
 	$AcceptedForStudies = $stmt3->fetch()[0]=='0'?0:1;
 
 
-
 	$_SESSION['STUDY_DEGREE'] = ($_POST['stop_stud']=='7' ? '1' : '2');
 	$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
+
 	
 	// ------------------ special menu for system administrator --------------------------------
 	$isAdmin=$_POST['isAdmin'];
